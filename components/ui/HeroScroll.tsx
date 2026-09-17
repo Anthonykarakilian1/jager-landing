@@ -19,12 +19,7 @@ const PRODUCTS = [
     num: '01',
     diam: '2.5 mm',
     length: '57 mm',
-    specs: [
-      { label: 'Medida Total',  value: '2.5 × 57 mm' },
-      { label: 'Presentación',  value: '4,000 pcs / rollo' },
-      { label: 'Tipo de Caña',  value: 'Ring Shank (Anillado)' },
-      { label: 'Aplicación',    value: 'Paletizado Pesado' },
-    ],
+    qty: '4,000 pcs',
   },
   {
     id: 2,
@@ -38,12 +33,7 @@ const PRODUCTS = [
     num: '02',
     diam: '2.0 mm',
     length: '57 mm',
-    specs: [
-      { label: 'Medida Total',  value: '2.0 × 57 mm' },
-      { label: 'Presentación',  value: '4,000 pcs / rollo' },
-      { label: 'Tipo de Caña',  value: 'Ring Shank (Anillado)' },
-      { label: 'Aplicación',    value: 'Fijación y Ensamble' },
-    ],
+    qty: '4,000 pcs',
   },
   {
     id: 3,
@@ -57,12 +47,7 @@ const PRODUCTS = [
     num: '03',
     diam: '90 mm',
     length: '25 mm',
-    specs: [
-      { label: 'Corona × Largo', value: '90 × 25 mm' },
-      { label: 'Presentación',   value: '5,000 pcs / caja' },
-      { label: 'Tipo de Punta',  value: 'Puntas en Pico' },
-      { label: 'Acabado',        value: 'Galvanizado Premium' },
-    ],
+    qty: '5,000 pcs',
   },
   {
     id: 4,
@@ -76,12 +61,7 @@ const PRODUCTS = [
     num: '04',
     diam: '100 mm',
     length: '45 mm',
-    specs: [
-      { label: 'Corona × Largo', value: '100 × 45 mm' },
-      { label: 'Presentación',   value: '10,000 pcs (12.3 kg)' },
-      { label: 'Tipo de Punta',  value: 'Puntas en Pico' },
-      { label: 'Acabado',        value: 'Galvanizado Estructural' },
-    ],
+    qty: '10,000 pcs',
   },
 ] as const;
 
@@ -99,6 +79,21 @@ function ProductSlideItem({
   y: any;
   display: any;
 }) {
+  const specs =
+    product.kind === 'nail'
+      ? [
+          { label: 'MEDIDA TOTAL',  value: product.size },
+          { label: 'DIÁMETRO',      value: product.diam },
+          { label: 'LONGITUD',      value: product.length },
+          { label: 'PRESENTACIÓN',  value: product.qty },
+        ]
+      : [
+          { label: 'MEDIDA TOTAL',  value: product.size },
+          { label: 'ANCHO CORONA',  value: product.diam },
+          { label: 'LARGO DE PATA', value: product.length },
+          { label: 'PRESENTACIÓN',  value: product.qty },
+        ];
+
   return (
     <motion.div
       style={{ opacity, y, display, zIndex: 10 }}
@@ -113,14 +108,14 @@ function ProductSlideItem({
         }}
         className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12"
       >
-        {/* ── COLUMNA 1: Ficha Técnica Estructurada y Limpia ── */}
-        <div className="flex flex-col gap-3.5 w-full md:w-[52%] text-left items-start">
+        {/* ── COLUMNA 1: Datos Técnicos y Ficha de Especificaciones Centrada ── */}
+        <div className="flex flex-col gap-3.5 w-full md:w-[52%] items-center md:items-start text-center md:text-left">
           
           {/* Header de producto con categoría y número */}
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-2">
               <span
-                className="text-[9px] uppercase tracking-[0.3em] font-bold px-2.5 py-0.5 rounded"
+                className="text-[9.5px] uppercase tracking-[0.3em] font-bold px-2.5 py-0.5 rounded"
                 style={{
                   color: product.color,
                   background: `${product.color}18`,
@@ -129,7 +124,7 @@ function ProductSlideItem({
               >
                 {product.type}
               </span>
-              <span className="text-[9px] uppercase tracking-[0.2em] text-[#666]">
+              <span className="text-[9.5px] uppercase tracking-[0.2em] text-[#777]">
                 {product.eng}
               </span>
             </div>
@@ -139,7 +134,7 @@ function ProductSlideItem({
           </div>
 
           {/* Título y Tagline */}
-          <div>
+          <div className="w-full">
             <h2 className="font-bebas text-3xl sm:text-5xl text-[#FFFFFF] leading-none tracking-tight">
               {product.name}
             </h2>
@@ -151,57 +146,29 @@ function ProductSlideItem({
             </p>
           </div>
 
-          {/* ── PANEL DE ESPECIFICACIONES TÉCNICAS (DISEÑO UNIFICADO Y ELEGANTE) ── */}
-          <div
-            className="w-full rounded-xl overflow-hidden divide-y divide-[#222222]"
-            style={{
-              background: '#121212',
-              border: '1px solid #242424',
-            }}
-          >
-            {/* Fila 1: Medida Principal y Presentación */}
-            <div className="grid grid-cols-2 divide-x divide-[#222222]">
-              <div className="p-2.5 sm:p-3 flex flex-col justify-center">
-                <span className="text-[8.5px] uppercase tracking-[0.18em] text-[#777] font-medium mb-0.5">
-                  {product.specs[0].label}
+          {/* ── GRID DE 4 TARJETAS CON TIPOGRAFÍA Y CONTENIDO 100% CENTRADO ── */}
+          <div className="grid grid-cols-2 gap-2.5 w-full pt-1">
+            {specs.map((s) => (
+              <div
+                key={s.label}
+                className="rounded-xl p-3 flex flex-col items-center justify-center text-center transition-all duration-200"
+                style={{
+                  background: '#141414',
+                  border: '1px solid #252525',
+                }}
+              >
+                <span className="text-[9px] uppercase tracking-[0.2em] text-[#888888] font-medium mb-1 text-center">
+                  {s.label}
                 </span>
-                <span className="font-sans text-xs sm:text-sm font-bold text-[#FFFFFF] tracking-tight">
-                  {product.specs[0].value}
-                </span>
-              </div>
-              <div className="p-2.5 sm:p-3 flex flex-col justify-center">
-                <span className="text-[8.5px] uppercase tracking-[0.18em] text-[#777] font-medium mb-0.5">
-                  {product.specs[1].label}
-                </span>
-                <span className="font-sans text-xs sm:text-sm font-bold text-[#FFFFFF] tracking-tight">
-                  {product.specs[1].value}
+                <span className="font-sans text-sm sm:text-[15px] font-bold text-[#FFFFFF] tracking-tight text-center leading-snug">
+                  {s.value}
                 </span>
               </div>
-            </div>
-
-            {/* Fila 2: Propiedad Técnica y Aplicación */}
-            <div className="grid grid-cols-2 divide-x divide-[#222222]">
-              <div className="p-2.5 sm:p-3 flex flex-col justify-center">
-                <span className="text-[8.5px] uppercase tracking-[0.18em] text-[#777] font-medium mb-0.5">
-                  {product.specs[2].label}
-                </span>
-                <span className="font-sans text-xs sm:text-sm font-semibold text-[#D0D0D0] tracking-tight">
-                  {product.specs[2].value}
-                </span>
-              </div>
-              <div className="p-2.5 sm:p-3 flex flex-col justify-center">
-                <span className="text-[8.5px] uppercase tracking-[0.18em] text-[#777] font-medium mb-0.5">
-                  {product.specs[3].label}
-                </span>
-                <span className="font-sans text-xs sm:text-sm font-semibold text-[#D0D0D0] tracking-tight">
-                  {product.specs[3].value}
-                </span>
-              </div>
-            </div>
+            ))}
           </div>
 
           {/* Sello de tecnología alemana */}
-          <div className="flex items-center gap-2 pt-0.5">
+          <div className="flex items-center gap-2 pt-0.5 justify-center md:justify-start w-full">
             <div className="flag-bar w-[2px] h-3.5 rounded-sm flex-shrink-0" />
             <span className="text-[8.5px] uppercase tracking-[0.25em] text-[#555] font-medium">
               German Technology · Tecnología Que Impone
