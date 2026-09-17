@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+/* ============================================================
+   JAGER — Design System v2
+   Aesthetic: Clean Industrial Minimal
+   ============================================================ */
+:root {
+  --font-bebas: 'Bebas Neue', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+
+  /* Neutral dark backgrounds */
+  --bg-0: #0C0C0C;
+  --bg-1: #111111;
+  --bg-2: #181818;
+  --bg-3: #1E1E1E;
+  --border: #252525;
+  --border-subtle: #1C1C1C;
+
+  /* German flag — muted, used sparingly */
+  --g-black: #1A1A1A;
+  --g-red:   #B80000;
+  --g-gold:  #C8960C;
+
+  /* Typography */
+  --text-1: #EBEBEB;
+  --text-2: #888888;
+  --text-3: #444444;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-inter);
+  background-color: var(--bg-0);
+  color: var(--text-1);
+  overflow-x: hidden;
+}
+
+.font-bebas { font-family: var(--font-bebas); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg-1); }
+::-webkit-scrollbar-thumb { background: var(--g-red); border-radius: 2px; }
+
+/* ── German flag stripe (3 stacked bars) ── */
+.flag-bar {
+  background: linear-gradient(
+    to bottom,
+    var(--g-black) 0%,   var(--g-black) 33.3%,
+    var(--g-red)   33.3%, var(--g-red)   66.6%,
+    var(--g-gold)  66.6%, var(--g-gold)  100%
+  );
+}
+
+/* ── Dot grid ── */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ── Fade animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim-fade-up    { animation: fadeUp 0.7s ease forwards; }
+.anim-fade-up-d1 { animation: fadeUp 0.7s 0.1s ease forwards; opacity: 0; }
+.anim-fade-up-d2 { animation: fadeUp 0.7s 0.2s ease forwards; opacity: 0; }
+.anim-fade-up-d3 { animation: fadeUp 0.7s 0.35s ease forwards; opacity: 0; }
+
+/* ── Forklift keyframes ── */
+@keyframes driveIn {
+  0%   { transform: translateX(-150%); }
+  30%  { transform: translateX(0%); }
+  70%  { transform: translateX(0%); }
+  100% { transform: translateX(150%); }
+}
+@keyframes liftFork {
+  0%,  28% { transform: translateY(0px); }
+  50%, 100% { transform: translateY(-28px); }
+}
+@keyframes palletRise {
+  0%,  28%  { opacity: 0; transform: translateY(0px); }
+  42%       { opacity: 1; transform: translateY(0px); }
+  55%, 100% { opacity: 1; transform: translateY(-28px); }
+}
+
+/* ── Marquee ── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee { animation: marquee 30s linear infinite; }
+
+/* ── Section divider line ── */
+.section-line {
+  width: 32px; height: 1px;
+  background: var(--g-red);
+  display: block;
+}
