@@ -5,63 +5,83 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import JagerLogo from '@/components/ui/JagerLogo';
 import { CoilNailSVG, StapleSVG } from '@/components/ui/ProductIllustrations';
 
-/* ── Catálogo de Productos Oficial JAGER ── */
+/* ── Catálogo Oficial JAGER con Especificaciones Técnicas ── */
 const PRODUCTS = [
   {
     id: 1,
-    type: 'CLAVOS',
+    type: 'CLAVOS EN ROLLO',
     name: 'Rollos de Clavos',
     eng: 'Coil Nails',
     size: '2.5 × 57 mm',
-    diam: '2.5 mm',
-    length: '57 mm',
-    qty: '4,000 pcs / rollo',
     tag: 'Paletizado pesado de alta resistencia',
     color: '#FF4D4F', // Rojo industrial luminoso
     kind: 'nail' as const,
     num: '01',
+    diam: '2.5 mm',
+    length: '57 mm',
+    specs: [
+      { label: 'Medida Total',  value: '2.5 × 57 mm' },
+      { label: 'Presentación',  value: '4,000 pcs / rollo' },
+      { label: 'Tipo de Caña',  value: 'Ring Shank (Anillado)' },
+      { label: 'Aplicación',    value: 'Paletizado Pesado' },
+    ],
   },
   {
     id: 2,
-    type: 'CLAVOS',
+    type: 'CLAVOS EN ROLLO',
     name: 'Rollos de Clavos',
     eng: 'Coil Nails',
     size: '2.0 × 57 mm',
-    diam: '2.0 mm',
-    length: '57 mm',
-    qty: '4,000 pcs / rollo',
     tag: 'Alta penetración y precisión',
     color: '#FFC53D', // Dorado/Ámbar luminoso
     kind: 'nail' as const,
     num: '02',
+    diam: '2.0 mm',
+    length: '57 mm',
+    specs: [
+      { label: 'Medida Total',  value: '2.0 × 57 mm' },
+      { label: 'Presentación',  value: '4,000 pcs / rollo' },
+      { label: 'Tipo de Caña',  value: 'Ring Shank (Anillado)' },
+      { label: 'Aplicación',    value: 'Fijación y Ensamble' },
+    ],
   },
   {
     id: 3,
-    type: 'GRAPAS',
+    type: 'GRAPAS GALVANIZADAS',
     name: 'Grapas Galvanizadas',
     eng: 'Galvanized Staples',
     size: '90 × 25 mm',
-    diam: '90 mm',
-    length: '25 mm',
-    qty: '5,000 pcs / caja',
     tag: 'Fijación estándar y embalaje industrial',
-    color: '#FF7A45', // Salmón/Naranja oficial de empaque
+    color: '#FF7A45', // Salmón/Naranja oficial
     kind: 'staple' as const,
     num: '03',
+    diam: '90 mm',
+    length: '25 mm',
+    specs: [
+      { label: 'Corona × Largo', value: '90 × 25 mm' },
+      { label: 'Presentación',   value: '5,000 pcs / caja' },
+      { label: 'Tipo de Punta',  value: 'Puntas en Pico' },
+      { label: 'Acabado',        value: 'Galvanizado Premium' },
+    ],
   },
   {
     id: 4,
-    type: 'GRAPAS',
+    type: 'GRAPAS GALVANIZADAS',
     name: 'Grapas Galvanizadas',
     eng: 'Galvanized Staples',
     size: '100 × 45 mm',
-    diam: '100 mm',
-    length: '45 mm',
-    qty: '10,000 pcs / caja',
     tag: 'Estructural de alta capacidad (12.3 kg)',
-    color: '#36CFC9', // Cian galvanizado brillante
+    color: '#36CFC9', // Cian galvanizado
     kind: 'staple' as const,
     num: '04',
+    diam: '100 mm',
+    length: '45 mm',
+    specs: [
+      { label: 'Corona × Largo', value: '100 × 45 mm' },
+      { label: 'Presentación',   value: '10,000 pcs (12.3 kg)' },
+      { label: 'Tipo de Punta',  value: 'Puntas en Pico' },
+      { label: 'Acabado',        value: 'Galvanizado Estructural' },
+    ],
   },
 ] as const;
 
@@ -79,119 +99,134 @@ function ProductSlideItem({
   y: any;
   display: any;
 }) {
-  const specs =
-    product.kind === 'nail'
-      ? [
-          { label: 'Medida Total',  value: product.size },
-          { label: 'Diámetro Caña', value: `Ø ${product.diam}` },
-          { label: 'Longitud',      value: product.length },
-          { label: 'Presentación',  value: product.qty },
-        ]
-      : [
-          { label: 'Medida Total',  value: product.size },
-          { label: 'Ancho Corona',  value: product.diam },
-          { label: 'Largo de Pata', value: product.length },
-          { label: 'Presentación',  value: product.qty },
-        ];
-
   return (
     <motion.div
       style={{ opacity, y, display, zIndex: 10 }}
-      className="absolute inset-0 flex items-center justify-center px-6 sm:px-12 pointer-events-auto"
+      className="absolute inset-0 flex items-center justify-center px-5 sm:px-10 pointer-events-auto"
     >
       <div
         style={{
           width: '100%',
-          maxWidth: 820,
+          maxWidth: 800,
           marginLeft: 'auto',
           marginRight: 'auto',
         }}
-        className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-14"
+        className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12"
       >
-        {/* ── COLUMNA 1: Datos Técnicos y Especificaciones ── */}
-        <div className="flex flex-col gap-4 w-full md:w-1/2 text-left items-start">
+        {/* ── COLUMNA 1: Ficha Técnica Estructurada y Limpia ── */}
+        <div className="flex flex-col gap-3.5 w-full md:w-[52%] text-left items-start">
           
-          {/* Badge de Categoría con color de acento vibrante */}
-          <div className="flex items-center gap-2.5">
-            <span
-              className="text-[9.5px] uppercase tracking-[0.35em] font-bold px-3 py-1 rounded"
-              style={{
-                color: product.color,
-                background: `${product.color}20`,
-                border: `1px solid ${product.color}50`,
-              }}
-            >
-              {product.type}
-            </span>
-            <span className="text-[9.5px] uppercase tracking-[0.25em] text-[#777]">
-              {product.eng}
+          {/* Header de producto con categoría y número */}
+          <div className="flex items-center justify-between w-full">
+            <div className="flex items-center gap-2">
+              <span
+                className="text-[9px] uppercase tracking-[0.3em] font-bold px-2.5 py-0.5 rounded"
+                style={{
+                  color: product.color,
+                  background: `${product.color}18`,
+                  border: `1px solid ${product.color}45`,
+                }}
+              >
+                {product.type}
+              </span>
+              <span className="text-[9px] uppercase tracking-[0.2em] text-[#666]">
+                {product.eng}
+              </span>
+            </div>
+            <span className="text-[11px] font-mono font-semibold text-[#666]">
+              {product.num} / 04
             </span>
           </div>
 
-          {/* Nombre y Tagline */}
+          {/* Título y Tagline */}
           <div>
-            <p className="text-[10px] uppercase tracking-[0.3em] text-[#555] mb-1 font-mono">
-              {product.num} / 04
-            </p>
-            <h2 className="font-bebas text-4xl sm:text-5xl text-[#FFFFFF] leading-none">
+            <h2 className="font-bebas text-3xl sm:text-5xl text-[#FFFFFF] leading-none tracking-tight">
               {product.name}
             </h2>
             <p
-              className="text-[10.5px] mt-1.5 uppercase tracking-[0.22em] font-semibold"
+              className="text-[10.5px] sm:text-xs mt-1 uppercase tracking-[0.2em] font-semibold"
               style={{ color: product.color }}
             >
               {product.tag}
             </p>
           </div>
 
-          {/* Grid de especificaciones técnicas con tipografía legible y proporcionada */}
-          <div className="grid grid-cols-2 gap-2.5 w-full pt-1">
-            {specs.map((s) => (
-              <div
-                key={s.label}
-                className="rounded-xl p-3 flex flex-col justify-center transition-all duration-200"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.025)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
-                }}
-              >
-                <span className="text-[9px] uppercase tracking-[0.18em] text-[#888888] font-medium mb-1">
-                  {s.label}
+          {/* ── PANEL DE ESPECIFICACIONES TÉCNICAS (DISEÑO UNIFICADO Y ELEGANTE) ── */}
+          <div
+            className="w-full rounded-xl overflow-hidden divide-y divide-[#222222]"
+            style={{
+              background: '#121212',
+              border: '1px solid #242424',
+            }}
+          >
+            {/* Fila 1: Medida Principal y Presentación */}
+            <div className="grid grid-cols-2 divide-x divide-[#222222]">
+              <div className="p-2.5 sm:p-3 flex flex-col justify-center">
+                <span className="text-[8.5px] uppercase tracking-[0.18em] text-[#777] font-medium mb-0.5">
+                  {product.specs[0].label}
                 </span>
-                <span className="font-sans text-sm sm:text-[14.5px] font-semibold text-[#FFFFFF] tracking-tight leading-snug">
-                  {s.value}
+                <span className="font-sans text-xs sm:text-sm font-bold text-[#FFFFFF] tracking-tight">
+                  {product.specs[0].value}
                 </span>
               </div>
-            ))}
+              <div className="p-2.5 sm:p-3 flex flex-col justify-center">
+                <span className="text-[8.5px] uppercase tracking-[0.18em] text-[#777] font-medium mb-0.5">
+                  {product.specs[1].label}
+                </span>
+                <span className="font-sans text-xs sm:text-sm font-bold text-[#FFFFFF] tracking-tight">
+                  {product.specs[1].value}
+                </span>
+              </div>
+            </div>
+
+            {/* Fila 2: Propiedad Técnica y Aplicación */}
+            <div className="grid grid-cols-2 divide-x divide-[#222222]">
+              <div className="p-2.5 sm:p-3 flex flex-col justify-center">
+                <span className="text-[8.5px] uppercase tracking-[0.18em] text-[#777] font-medium mb-0.5">
+                  {product.specs[2].label}
+                </span>
+                <span className="font-sans text-xs sm:text-sm font-semibold text-[#D0D0D0] tracking-tight">
+                  {product.specs[2].value}
+                </span>
+              </div>
+              <div className="p-2.5 sm:p-3 flex flex-col justify-center">
+                <span className="text-[8.5px] uppercase tracking-[0.18em] text-[#777] font-medium mb-0.5">
+                  {product.specs[3].label}
+                </span>
+                <span className="font-sans text-xs sm:text-sm font-semibold text-[#D0D0D0] tracking-tight">
+                  {product.specs[3].value}
+                </span>
+              </div>
+            </div>
           </div>
 
-          {/* Sello de tecnología */}
-          <div className="flex items-center gap-2 pt-1">
+          {/* Sello de tecnología alemana */}
+          <div className="flex items-center gap-2 pt-0.5">
             <div className="flag-bar w-[2px] h-3.5 rounded-sm flex-shrink-0" />
-            <span className="text-[9px] uppercase tracking-[0.25em] text-[#666]">
+            <span className="text-[8.5px] uppercase tracking-[0.25em] text-[#555] font-medium">
               German Technology · Tecnología Que Impone
             </span>
           </div>
         </div>
 
         {/* ── COLUMNA 2: Plano Técnico Vectorial con Cotas ── */}
-        <div className="flex items-center justify-center w-full md:w-1/2">
+        <div className="flex items-center justify-center w-full md:w-[48%]">
           <div className="relative flex items-center justify-center">
             {/* Glow sutil con el color correspondiente */}
             <div
-              className="absolute inset-0 rounded-full blur-3xl opacity-[0.10] pointer-events-none"
-              style={{ background: product.color, transform: 'scale(1.2)' }}
+              className="absolute inset-0 rounded-full blur-3xl opacity-[0.12] pointer-events-none"
+              style={{ background: product.color, transform: 'scale(1.15)' }}
             />
             {product.kind === 'nail' ? (
               <CoilNailSVG
-                className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64"
+                className="relative w-44 h-44 sm:w-56 sm:h-56 lg:w-64 lg:h-64"
                 diam={product.diam}
                 length={product.length}
                 accentColor={product.color}
               />
             ) : (
               <StapleSVG
-                className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64"
+                className="relative w-44 h-44 sm:w-56 sm:h-56 lg:w-64 lg:h-64"
                 width={product.diam}
                 length={product.length}
                 accentColor={product.color}
@@ -207,7 +242,7 @@ function ProductSlideItem({
 /* ── Navegador de Puntos Lateral ── */
 function DotNav({ active }: { active: number }) {
   return (
-    <div className="absolute right-5 sm:right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20 pointer-events-none">
+    <div className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20 pointer-events-none">
       {PRODUCTS.map((p, i) => (
         <div
           key={i}
