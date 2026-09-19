@@ -70,21 +70,56 @@ body {
 .anim-fade-up-d2 { animation: fadeUp 0.7s 0.2s ease forwards; opacity: 0; }
 .anim-fade-up-d3 { animation: fadeUp 0.7s 0.35s ease forwards; opacity: 0; }
 
-/* ── Forklift keyframes ── */
-@keyframes driveIn {
-  0%   { transform: translateX(-150%); }
-  30%  { transform: translateX(0%); }
-  70%  { transform: translateX(0%); }
-  100% { transform: translateX(150%); }
+/* ── Nail Gun Intro Keyframes ── */
+
+/* 1. Entrada y retroceso de la pistola */
+@keyframes gunRecoil {
+  0%   { transform: translateY(-40px) rotate(-4deg); opacity: 0; }
+  20%  { transform: translateY(0px) rotate(0deg); opacity: 1; }
+  32%  { transform: translateY(0px) rotate(0deg); }
+  35%  { transform: translateY(-16px) rotate(-3.5deg); } /* Retroceso explosivo del disparo */
+  42%  { transform: translateY(2px) rotate(0.5deg); }  /* Rebote de amortiguación */
+  50%  { transform: translateY(0px) rotate(0deg); }
+  72%  { transform: translateY(0px) scale(1); opacity: 1; }
+  85%  { transform: translateY(-20px) scale(0.95); opacity: 0; }
+  100% { transform: translateY(-20px) scale(0.95); opacity: 0; }
 }
-@keyframes liftFork {
-  0%,  28% { transform: translateY(0px); }
-  50%, 100% { transform: translateY(-28px); }
+
+/* 2. Disparo e impacto del clavo penetrando la paleta */
+@keyframes nailDrive {
+  0%, 33% { transform: translateY(-80px); opacity: 0; }
+  34%     { opacity: 1; transform: translateY(-50px); }
+  36%     { transform: translateY(0px); opacity: 1; } /* Clavado instantáneo en la madera */
+  72%     { transform: translateY(0px); opacity: 1; }
+  85%     { transform: translateY(0px); opacity: 0; }
+  100%    { transform: translateY(0px); opacity: 0; }
 }
-@keyframes palletRise {
-  0%,  28%  { opacity: 0; transform: translateY(0px); }
-  42%       { opacity: 1; transform: translateY(0px); }
-  55%, 100% { opacity: 1; transform: translateY(-28px); }
+
+/* 3. Destello de aire neumático y chispas de impacto */
+@keyframes muzzleBurst {
+  0%, 33% { transform: scale(0.2); opacity: 0; }
+  35%     { transform: scale(1.4); opacity: 1; }
+  45%     { transform: scale(2.0); opacity: 0; }
+  100%    { transform: scale(2.0); opacity: 0; }
+}
+
+/* 4. Vibración de impacto en la paleta de madera */
+@keyframes palletShake {
+  0%, 34% { transform: translateY(0px); }
+  35%     { transform: translateY(3px); }
+  37%     { transform: translateY(-2px); }
+  39%     { transform: translateY(1px); }
+  42%     { transform: translateY(0px); }
+  72%     { opacity: 1; }
+  85%     { opacity: 0; }
+  100%    { opacity: 0; }
+}
+
+/* 5. Revelación final del Logo JAGER */
+@keyframes logoReveal {
+  0%, 65% { opacity: 0; transform: scale(0.92); }
+  80%     { opacity: 1; transform: scale(1.02); }
+  90%, 100% { opacity: 1; transform: scale(1); }
 }
 
 /* ── Marquee ── */
